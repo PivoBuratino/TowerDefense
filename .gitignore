@@ -361,3 +361,18 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/UserSettings
+/TowerDefense.sln
+/ProjectSettings
+/Library
+/Assets/UnityTechnologies/ParticlePack
+/Assets/Scenes
+/Assets/Prefabs
+/Assets/Monsters Creatures Fantasy
+/Assets/Hero Knight - Pixel Art
+/Assets/Hero and Opponents
+/Assets/Art
+/Assets/Animations
+/Assembly-CSharp.csproj
+/Assembly-CSharp-Editor.csproj
+/.vsconfig
