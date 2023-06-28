@@ -14,16 +14,5 @@ public class BuildSite : MonoBehaviour, IPointerDownHandler
         print($"нажато {transform.root.name}");
         OnClickEvent(transform.root);
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

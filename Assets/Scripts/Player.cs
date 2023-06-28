@@ -4,6 +4,8 @@ using System;
 
 public class Player : SingletonBase<Player>
 {
+    public event Action OnPlayerDead; 
+
     [SerializeField] private int m_HitPoints;
     public int HitPoints => m_HitPoints;
     [SerializeField] private SpaceShip m_Ship;
@@ -22,7 +24,7 @@ public class Player : SingletonBase<Player>
         if (m_Ship != null) Destroy(m_Ship.gameObject);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (m_Ship) m_Ship.EventOnDeath.AddListener(OnShipDeath);
         Respawn(); 
@@ -47,18 +49,16 @@ public class Player : SingletonBase<Player>
         m_HitPoints -= m_damage;
         if (m_HitPoints <= 0)
         {
-            //Time.timeScale = 0;
-            //print("Game Over");
-            //LevelSequenceController.Instance.FinishCurrentLevel(false);
-            LevelSequenceController.Instance.RestartLevel();
+            m_HitPoints = 0;
+            OnPlayerDead?.Invoke();          
         }
     }
 
     private void Respawn()
     {
-        if (LevelSequenceController.PlayerShip != null)
+        if (LevelSequenceController.PlayerShipPrefab != null)
         {
-            var newPlayerShip = Instantiate(LevelSequenceController.PlayerShip);
+            var newPlayerShip = Instantiate(LevelSequenceController.PlayerShipPrefab);
 
             m_Ship = newPlayerShip.GetComponent<SpaceShip>();
             m_Ship.name = "Player Ship";           

@@ -6,7 +6,7 @@ public class TDPlayer : Player
     [SerializeField] private int m_gold = 0;
     public static new TDPlayer Instance
     {
-        get
+       get
         {
             return Player.Instance as TDPlayer;
         }
@@ -25,8 +25,9 @@ public class TDPlayer : Player
         act(Instance.HitPoints);
     }  
 
-    private void Start()
-    {        
+    protected override void Start()
+    {
+        base.Start();
         OnLifeUpdate(HitPoints);
         OnGoldUpdate(m_gold);
     }
