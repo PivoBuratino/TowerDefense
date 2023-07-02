@@ -19,13 +19,6 @@ public class LevelResultController : SingletonBase<LevelResultController>
     /// <param name="result"></param>
     public void Show(bool result)
     {
-        Debug.Log(result);
-        /*if (result)
-        {
-            UpdateCurrentLevelStats();
-            UpdateVisualStats();
-        }
-        */
         m_PanelSuccess?.gameObject.SetActive(result);
         m_PanelFailure?.gameObject.SetActive(!result);
     }

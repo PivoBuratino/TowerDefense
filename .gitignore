@@ -376,3 +376,4 @@ FodyWeavers.xsd
 /Assembly-CSharp.csproj
 /Assembly-CSharp-Editor.csproj
 /.vsconfig
+/Temp

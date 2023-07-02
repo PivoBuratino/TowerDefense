@@ -3,11 +3,18 @@ using UnityEngine;
 
 public class MapCompletion : SingletonBase<MapCompletion>
 {
+    const string filename = "completion.dat";
+
     [Serializable]
     private class EpisodeScore
     {
         public Episode episode;
         public int score;
+    }
+    private new void Awake()
+    {
+        base.Awake();
+        Saver<EpisodeScore[]>.TryLoad(filename, ref completionData);
     }
     public static void SaveEpisodeResult(int levelScore)
     {
@@ -34,7 +41,11 @@ public class MapCompletion : SingletonBase<MapCompletion>
         {
             if (item.episode == currentEpisode)
             {
-                if (levelScore > item.score) item.score = levelScore;               
+                if (levelScore > item.score)
+                { 
+                    item.score = levelScore;
+                    Saver<EpisodeScore[]>.Save(filename, completionData);
+                }       
             }
         }
     }
