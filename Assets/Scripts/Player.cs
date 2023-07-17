@@ -29,6 +29,10 @@ public class Player : SingletonBase<Player>
         if (m_Ship) m_Ship.EventOnDeath.AddListener(OnShipDeath);
         Respawn(); 
     }
+    private void OnDestroy()
+    {
+        if (m_Ship) m_Ship.EventOnDeath.RemoveListener(OnShipDeath);
+    }
 
     private void OnShipDeath()
     {
@@ -40,7 +44,7 @@ public class Player : SingletonBase<Player>
         }
         else
         { 
-            //LevelSequenceController.Instance.FinishCurrentLevel(false);
+            LevelSequenceController.Instance.FinishCurrentLevel(false);
         }        
     }    
 

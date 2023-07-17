@@ -4,14 +4,10 @@ using UnityEngine;
 
 [Serializable]
 public class Saver<T>
-{
-    private static string Path(string filename)
-    {
-        return $"{Application.persistentDataPath}/{filename}";
-    }
+{        
     public static void TryLoad(string filename, ref T data)
     {
-        var path = Path(filename);
+        var path = FileHandler.Path(filename);
         Debug.Log(path);
         if (File.Exists(path))
         {
@@ -31,7 +27,27 @@ public class Saver<T>
         var wrapper = new Saver<T> { Data = data };
         var dataString = JsonUtility.ToJson(wrapper);
        
-        File.WriteAllText(Path(filename), dataString);
+        File.WriteAllText(FileHandler.Path(filename), dataString);
     }
     public T Data;    
+}
+public static class FileHandler
+{    
+    public static string Path(string filename)
+    {
+        return $"{Application.persistentDataPath}/{filename}";
+    }
+    public static void Reset(string filename)
+    {
+        var path = Path(filename);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
+
+    internal static bool HasFile(string filename)
+    {
+        return File.Exists(Path(filename));
+    }
 }

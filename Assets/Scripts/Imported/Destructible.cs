@@ -83,7 +83,8 @@ public class Destructible : Entity
     }
     protected virtual void OnDestroy()
     {
-        m_AllDestructibles.Remove(this);        
+        m_AllDestructibles.Remove(this);
+        m_EventOnDeath = null;
     }
 
     public const int TeamIdNeutral = 0;
@@ -104,4 +105,5 @@ public class Destructible : Entity
         m_HitPoints = asset.hp;       
         m_ScoreValue = asset.score;
     }
+    
 }

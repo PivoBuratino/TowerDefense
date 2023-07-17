@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelSequenceController : SingletonBase<LevelSequenceController>
 {
-    public static string MainMenuSceneNickname = "LevelMap";
+    public const string MainMenuSceneNickname = "MainMenu";
+    public const string LevelMapSceneNickname = "LevelMap";
 
     /// <summary>
     /// Текущий эпизод. Выставляется контроллером выбора эпизода перед началом игры.
@@ -36,7 +37,7 @@ public class LevelSequenceController : SingletonBase<LevelSequenceController>
     /// </summary>
     public void RestartLevel()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     /// <summary>
@@ -59,7 +60,7 @@ public class LevelSequenceController : SingletonBase<LevelSequenceController>
         // конец эпизода вываливаемся в главное меню.
         if (CurrentEpisode.Levels.Length <= CurrentLevel)
         {
-            SceneManager.LoadScene(MainMenuSceneNickname);
+            SceneManager.LoadScene(LevelMapSceneNickname);
         }
         else
         {

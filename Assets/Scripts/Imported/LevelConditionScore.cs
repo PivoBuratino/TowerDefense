@@ -24,5 +24,5 @@ public class LevelConditionScore : MonoBehaviour, ILevelCondition
             }
             return m_Reached;
         }
-    }
+    }    
 }

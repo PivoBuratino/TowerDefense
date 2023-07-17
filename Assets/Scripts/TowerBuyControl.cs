@@ -12,9 +12,9 @@ public class TowerBuyControl : MonoBehaviour
     { 
         buildSite = value; 
     }
-
+        
     private void Start()
-    { 
+    {
         TDPlayer.GoldUpdateSubscribe(GoldStatusCheck);
     
         m_Text.text = m_ta.goldCost.ToString();
@@ -32,5 +32,5 @@ public class TowerBuyControl : MonoBehaviour
     {
         TDPlayer.Instance.TryBuild(m_ta, buildSite);
         BuildSite.HideControls();
-    }
+    }  
 }

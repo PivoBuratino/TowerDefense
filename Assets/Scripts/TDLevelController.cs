@@ -2,22 +2,35 @@ using UnityEngine;
 
 public class TDLevelController : LevelController
 {
-    public int levelScore => 1;
+    private int levelScore = 3;
+    //public int levelScore => 1;
+    public bool ClockStopped { get; private set; }
     private new void Start()
     {
         base.Start();
         TDPlayer.Instance.OnPlayerDead += () =>
         {
-            StopLevelActivity();
+            StopLevelActivity();            
             LevelResultController.Instance.Show(false);
         };
+
+        m_ReferenceTime += Time.time;
         m_EventLevelCompleted.AddListener(() =>
             {
                 StopLevelActivity();
+                if (m_ReferenceTime < Time.time)
+                {
+                    levelScore -= 1;
+                }
+                print(levelScore);
                 MapCompletion.SaveEpisodeResult(levelScore);
-            });
-
-        ;
+            });  
+        void LifeScoreChange(int _)
+        {
+            levelScore -= 1;
+            TDPlayer.OnLifeUpdate -= LifeScoreChange;
+        }
+        TDPlayer.OnLifeUpdate += LifeScoreChange;
     }
     private void StopLevelActivity()
     {
@@ -35,6 +48,8 @@ public class TDLevelController : LevelController
         }
         DisableAll<Spawner>();
         DisableAll<Projectile>();
-        DisableAll<Tower>();        
+        DisableAll<Tower>();
+        DisableAll<NextWaveGUI>();
+        ClockStopped = true;
     }
 }

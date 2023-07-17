@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class BuyControl : MonoBehaviour
 {
-    private RectTransform t;
+    public RectTransform t;
     private void Awake()
     {
         t = GetComponent<RectTransform>();
+
         BuildSite.OnClickEvent += MoveToBuildSite;
         gameObject.SetActive(false);
-    }
+    }    
     private void MoveToBuildSite(Transform buildSite)
-    {
-        if (buildSite)
+    {        
+        if (buildSite != null)
         {
             var position = Camera.main.WorldToScreenPoint(buildSite.position);
-            print(position);
+            
             t.anchoredPosition = position;
             gameObject.SetActive(true);
         }
@@ -24,5 +25,9 @@ public class BuyControl : MonoBehaviour
         {
             tbc.SetBuildSite(buildSite);
         }
+    }
+    public void OnDestroy()
+    {
+        BuildSite.OnClickEvent -= MoveToBuildSite;
     }
 }

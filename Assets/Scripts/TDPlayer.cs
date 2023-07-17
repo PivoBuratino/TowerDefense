@@ -18,13 +18,19 @@ public class TDPlayer : Player
         OnGoldUpdate += act;
         act(Instance.m_gold);
     }
-    private static event Action<int> OnLifeUpdate;
+    public static event Action<int> OnLifeUpdate;
     public static void LifeUpdateSubscribe(Action<int> act)
     {
         OnLifeUpdate += act;
         act(Instance.HitPoints);
-    }  
-
+    }
+    [SerializeField] private UpgradeAsset healthUpgrade;
+    private new void Awake()
+    {
+        base.Awake();
+        var level = Upgrades.GetUpgradeLevel(healthUpgrade);
+        TakeDamage(-level * 5);
+    }
     protected override void Start()
     {
         base.Start();
@@ -49,5 +55,11 @@ public class TDPlayer : Player
         tower.GetComponentInChildren<SpriteRenderer>().sprite = towerAsset.sprite;
         tower.GetComponentInChildren<Turret>().AssignLoadout(towerAsset.turretProperties); 
         Destroy(buildSite.gameObject);
+    }
+    
+    private void OnDestroy()
+    {
+        OnGoldUpdate = null;
+        OnLifeUpdate = null;
     }
 }
