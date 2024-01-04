@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class LevelConditionScore : MonoBehaviour, ILevelCondition
+public class LevelConditionScore : MonoBehaviour//, ILevelCondition
 {
+    /*
     [SerializeField] private int score;
 
     [SerializeField] private float bonusTime;
@@ -13,6 +14,7 @@ public class LevelConditionScore : MonoBehaviour, ILevelCondition
     private bool m_Reached;
     bool ILevelCondition.IsCompleted
     {
+        /*
         get
         {
             if(Player.Instance != null && Player.Instance.ActiveShip != null)
@@ -24,5 +26,7 @@ public class LevelConditionScore : MonoBehaviour, ILevelCondition
             }
             return m_Reached;
         }
+        
     }    
+    */
 }

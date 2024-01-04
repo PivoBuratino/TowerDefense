@@ -12,11 +12,11 @@ public class NextWaveGUI : MonoBehaviour
     private EnemyWaveManager manager;
     private float timeToNextWave;
   
-    void Start()
+    void Awake()
     {
         manager = FindObjectOfType<EnemyWaveManager>();
         EnemyWave.OnWavePrepare += (float time) =>
-        {
+        {            
             timeToNextWave = time;
         };
     }

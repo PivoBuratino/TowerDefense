@@ -21,7 +21,10 @@ public class EnemyWave : MonoBehaviour
     [SerializeField] private PathGroup[] groups;
 
     [SerializeField] private float prepareTime = 10f;
-    public float GetRemainingTime() { return prepareTime - Time.time; }
+    public float GetRemainingTime() 
+    {
+        return prepareTime - Time.time;        
+    }
 
     private void Awake()
     {

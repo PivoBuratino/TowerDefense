@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public interface ILevelCondition
 {  
@@ -17,6 +18,9 @@ public class LevelController : SingletonBase<LevelController>
     private bool m_IsLevelCompleted;
 
     private float m_LevelTime;
+
+    [SerializeField] private TMP_Text gameClock;
+
     public float LevelTime => m_LevelTime;
 
     protected void Start()
@@ -26,8 +30,13 @@ public class LevelController : SingletonBase<LevelController>
 
     private void Update()
     {
-        if(!m_IsLevelCompleted)
+        if (!m_IsLevelCompleted)
         {
+            if (ReferenceTime > Time.time)
+            {
+                gameClock.text = ((int)(ReferenceTime - Time.time)).ToString();
+            }
+
             m_LevelTime += Time.deltaTime;
 
             CheckLevelConditions();

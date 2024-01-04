@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyWaveManager : MonoBehaviour
 {
+    public static event Action<Enemy> OnEnemySpawn;
     [SerializeField] private Enemy m_EnemyPrefab;
     [SerializeField] private Path[] paths;
     [SerializeField] private EnemyWave currentWave;
@@ -49,7 +50,7 @@ public class EnemyWaveManager : MonoBehaviour
                     e.Use(asset);
                     e.GetComponent<TDPatrolController>().SetPath(paths[pathIndex]);
                     activeEnemyCount += 1;
-                    
+                    OnEnemySpawn?.Invoke(e);
                 }               
             }
             else

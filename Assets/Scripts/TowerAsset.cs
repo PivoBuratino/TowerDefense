@@ -8,13 +8,17 @@ public class TowerAsset : ScriptableObject
     public Sprite sprite;
     public Sprite GUISprite;
     public TurretProperties turretProperties;
+    [SerializeField] private UpgradeAsset requiredUpgrade;
+    [SerializeField] private int requiredUpgradeLevel;
 
-    /*
-    public void Build(Vector2 position, Tower towerPrefab)
+    public TowerAsset[] m_UpgradesTo;
+    public bool IsAvailable()
     {
-        var tower = Instantiate(towerPrefab, position, Quaternion.identity);
-        tower.GetComponent<SpriteRenderer>().sprite = sprite; 
+        if (requiredUpgrade)
+        {
+            return requiredUpgradeLevel <= Upgrades.GetUpgradeLevel(requiredUpgrade);
+        }
+        else return true;
     }
-    */
 }
 

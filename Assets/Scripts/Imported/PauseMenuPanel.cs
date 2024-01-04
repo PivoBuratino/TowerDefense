@@ -5,7 +5,7 @@ public class PauseMenuPanel : MonoBehaviour
 {
     public void OnButtonShowPause()
     {
-        print("pause hit");
+        //print("pause hit");
         gameObject.SetActive(true);
         Time.timeScale = 0;        
     }

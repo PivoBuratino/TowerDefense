@@ -14,7 +14,6 @@ public class BuyUpgrade : MonoBehaviour
 
     public void Initialize()
     {
-        print("zbs");
         upgradeIcon.sprite = asset.sprite;
         var savedLevel = Upgrades.GetUpgradeLevel(asset);        
 

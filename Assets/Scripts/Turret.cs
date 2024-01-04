@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
@@ -22,6 +23,11 @@ public class Turret : MonoBehaviour
     {
         if (m_RefireTimer > 0) m_RefireTimer -= Time.deltaTime;
         //else if (Mode == TurretMode.Auto) Fire();
+    }
+
+    internal void PushTheTempo(int level, float ratio)
+    {
+        m_TurretProperties.RaiseTempo(level, ratio);
     }
 
     public void Fire()

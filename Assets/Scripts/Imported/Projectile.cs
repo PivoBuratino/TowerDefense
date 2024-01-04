@@ -1,4 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Projectile : MonoBehaviour
 {
@@ -6,7 +9,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private float m_Lifetime;
 
-    [SerializeField] private int m_Damage;
+    [SerializeField] protected int m_Damage;
 
     [SerializeField] private ImpactEffect m_ImpactEffectPrefab;
 
@@ -21,21 +24,7 @@ public class Projectile : MonoBehaviour
 
         if (hit)
         {
-            Destructible dest = hit.collider.transform.root.GetComponent<Destructible>();           
-
-            if (dest != null && dest != m_Parent)
-            {
-                dest.ApplyDamage(m_Damage);
-
-                if (Player.Instance.AllParentShips.Contains(m_Parent) && dest.HitPoints <= 0)                
-                {
-                    Debug.Log("прямое попадание!");
-
-                    Player.Instance.AddScore(dest.ScoreValue);
-
-                    if (dest.GetComponent<SpaceShip>() != null) Player.Instance.AddKill();
-                }
-            }
+            OnHit(hit);
             OnProjectileLifeEnd(hit.collider, hit.point);
         }
         m_Timer += Time.deltaTime;
@@ -44,6 +33,31 @@ public class Projectile : MonoBehaviour
 
         transform.position += new Vector3(step.x, step.y, 0);
     }
+
+    public void SetFromOtherProjectile(Projectile other)
+    {
+        other.GetData(out m_Velocity, out m_Lifetime, out m_Damage, out m_ImpactEffectPrefab);
+    }
+
+    private void GetData(out float m_Velocity, out float m_Lifetime, out int m_Damage, out ImpactEffect m_ImpactEffectPrefab)
+    {
+        m_Velocity = this.m_Velocity;
+        m_Lifetime = this.m_Lifetime;
+        m_Damage = this.m_Damage;
+        m_ImpactEffectPrefab = this.m_ImpactEffectPrefab;
+    }
+
+    protected virtual void OnHit(RaycastHit2D hit)
+    {
+        Destructible dest = hit.collider.transform.root.GetComponent<Destructible>();
+
+        if (dest != null && dest != m_Parent)
+        {
+            dest.ApplyDamage(m_Damage);            
+        }
+    }
+    
+
     private void OnProjectileLifeEnd(Collider2D col, Vector2 pos)
     {
         Destroy(gameObject);
@@ -55,8 +69,22 @@ public class Projectile : MonoBehaviour
     {
         m_Parent = parent;
     }
-    public void SetTarget(Destructible target)
+   
+}
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(Projectile))]
+public class ProjectileInspector: Editor
+{
+    public override void OnInspectorGUI()
     {
-        
+        base.OnInspectorGUI();
+        if (GUILayout.Button("Create TD Projectile"))
+        {
+            var target = this.target as Projectile;
+            var tdProj = target.gameObject.AddComponent<TDProjectile>();
+            tdProj.SetFromOtherProjectile(target);            
+        }
     }
 }
+#endif 

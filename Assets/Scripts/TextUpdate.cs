@@ -4,7 +4,7 @@ using TMPro;
 
 public class TextUpdate : MonoBehaviour
 {
-    public enum UpdateSource { Gold, Life, Time }
+    public enum UpdateSource { Gold, Life, Mana }
     public UpdateSource source = UpdateSource.Gold;
     private TMP_Text m_text;
     void Start()
@@ -17,7 +17,10 @@ public class TextUpdate : MonoBehaviour
                 break;
             case UpdateSource.Life:
                 TDPlayer.LifeUpdateSubscribe(UpdateText);                
-                break;   
+                break;
+            case UpdateSource.Mana:
+                TDPlayer.ManaUpdateSubscribe(UpdateText);
+                break;
         }        
     }
     private void UpdateText(int money)

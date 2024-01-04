@@ -6,18 +6,15 @@ using TMPro;
 public class TimeLevelCondition : MonoBehaviour, ILevelCondition
 {
     [SerializeField] private float timeLimit = 4f;
-    [SerializeField] private TMP_Text gameClock;
-    private TDLevelController levelControl;
+    [SerializeField] private TMP_Text gameClock;    
     public bool IsCompleted => Time.time > timeLimit;
     private void Start()
     {
-        timeLimit += Time.time;
-        levelControl = FindObjectOfType<TDLevelController>();
-
+        timeLimit += Time.time;   
     }
     private void Update()
     {
-        if (!levelControl.ClockStopped)
+        if (!TDLevelController.ClockStopped)
         {
             gameClock.text = ((int)(timeLimit - Time.time)).ToString();
         }

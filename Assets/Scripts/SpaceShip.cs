@@ -24,6 +24,13 @@ public class SpaceShip : Destructible
     /// </summary>
     [SerializeField] private float m_MaxLinearVelocity;
     public float MaxLinearVelocity => m_MaxLinearVelocity;
+    private float m_MaxVelocityBackUp;
+    public void HalfMaxLinearVelocity() 
+    {
+        m_MaxVelocityBackUp = m_MaxLinearVelocity;
+        m_MaxLinearVelocity /= 2; 
+    }
+    public void RestoreMaxLinearVelocity() { m_MaxLinearVelocity = m_MaxVelocityBackUp; }
 
     [SerializeField] private float m_MaxAngularVelocity;
     public float MaxAngularVelocity => m_MaxAngularVelocity;

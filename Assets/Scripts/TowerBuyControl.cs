@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class TowerBuyControl : MonoBehaviour
 {
-    [SerializeField] private TowerAsset m_ta;
+    [SerializeField] private TowerAsset m_TowerAsset;
+    public void SetTowerAsset(TowerAsset asset) { m_TowerAsset = asset; }
     [SerializeField] private TMP_Text m_Text;
     [SerializeField] private Button m_Button;
     [SerializeField] private Transform buildSite;
@@ -17,20 +18,29 @@ public class TowerBuyControl : MonoBehaviour
     {
         TDPlayer.GoldUpdateSubscribe(GoldStatusCheck);
     
-        m_Text.text = m_ta.goldCost.ToString();
-        m_Button.GetComponent<Image>().sprite = m_ta.GUISprite;
+        m_Text.text = m_TowerAsset.goldCost.ToString();
+        m_Button.GetComponentInChildren<Image>().sprite = m_TowerAsset.GUISprite;
+    }
+    private void OnDestroy()
+    {
+        TDPlayer.GoldUpdateUnSubscribe(GoldStatusCheck);
     }
     private void GoldStatusCheck (int gold)
     {
-        if (gold > m_ta.goldCost != m_Button.interactable)
+        if (gold >= m_TowerAsset.goldCost)
         {
-            m_Button.interactable = !m_Button.interactable;
-            m_Text.color = m_Button.interactable ? Color.white : Color.red;
+            m_Button.interactable = true;
+            m_Text.color = Color.white;
+        }
+        else
+        {
+            m_Button.interactable = false;
+            m_Text.color = Color.red;
         }
     }
     public void Buy()
     {
-        TDPlayer.Instance.TryBuild(m_ta, buildSite);
+        TDPlayer.Instance.TryBuild(m_TowerAsset, buildSite);        
         BuildSite.HideControls();
     }  
 }

@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class TDLevelController : LevelController
 {
-    private int levelScore = 3;
-    //public int levelScore => 1;
-    public bool ClockStopped { get; private set; }
+    private int levelScore = 3;    
+    public static bool ClockStopped { get; private set; }
     private new void Start()
     {
         base.Start();
@@ -21,8 +20,7 @@ public class TDLevelController : LevelController
                 if (m_ReferenceTime < Time.time)
                 {
                     levelScore -= 1;
-                }
-                print(levelScore);
+                }                
                 MapCompletion.SaveEpisodeResult(levelScore);
             });  
         void LifeScoreChange(int _)

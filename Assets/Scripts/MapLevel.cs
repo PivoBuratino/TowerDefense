@@ -18,7 +18,7 @@ public class MapLevel : MonoBehaviour
         }
     }
 
-    internal void Initialize()
+    public int Initialize()
     {
         var score = MapCompletion.Instance.GetEpisodeScore(m_Episode);
         resultPanel.gameObject.SetActive(score > 0);
@@ -27,6 +27,7 @@ public class MapLevel : MonoBehaviour
         {
             resultImages[i].color = Color.white;
         }
+        return score;
     }
 
     public void LoadLevel()

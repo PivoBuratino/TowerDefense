@@ -31,7 +31,6 @@ public class Upgrades : SingletonBase<Upgrades>
 
                 Saver<UpgradeSave[]>.Save(filename, Instance.save);
             }
-            else print("pzdc");
         }    
     }
 
@@ -53,7 +52,7 @@ public class Upgrades : SingletonBase<Upgrades>
                 result += upgrade.m_Asset.costByLevel[i];
             }            
         }
-        print("result =" + result);
+        //print("result =" + result);
         return result;        
     }
     public static int GetUpgradeLevel(UpgradeAsset asset)

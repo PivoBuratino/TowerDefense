@@ -19,7 +19,8 @@ public class LevelResultController : SingletonBase<LevelResultController>
     /// <param name="result"></param>
     public void Show(bool result)
     {
-        m_PanelSuccess?.gameObject.SetActive(result);
+        BackGroundMusicPlayer.Instance.StopMusic();
+        if (TDPlayer.Instance.HitPoints > 0) m_PanelSuccess?.gameObject.SetActive(result);
         m_PanelFailure?.gameObject.SetActive(!result);
     }
 
